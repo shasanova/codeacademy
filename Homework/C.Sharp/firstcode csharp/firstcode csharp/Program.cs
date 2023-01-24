@@ -92,6 +92,8 @@ namespace HelloWorld
             //    }
             //}
 
+            int[] numbers = { 1, 5, 21, 7, 644, 8, 123 };
+
             bool found3Digits = false;
             int remCounter = 0;
 
