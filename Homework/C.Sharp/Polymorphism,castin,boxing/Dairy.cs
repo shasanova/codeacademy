@@ -6,6 +6,7 @@ namespace Polymorphism__casting__boxin_unboxing
         public double FatPercent { get; internal set; }
 
         
+
     }
 }
 

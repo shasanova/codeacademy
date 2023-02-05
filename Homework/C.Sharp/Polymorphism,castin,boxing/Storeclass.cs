@@ -7,11 +7,13 @@ namespace Polymorphism__casting__boxin_unboxing
 
         public Product[] Products { get=>_products; set=>_products = value; }
 
-        private int _dairyProductCountLimit = 20;
-        public int DairyProductCountLimit { set => _dairyProductCountLimit = value; get => _dairyProductCountLimit; }
-        
+
         private double _alcoholPercentLimit = 40;
         public double AlcoholPercentLimit { set => _alcoholPercentLimit = value; get => _alcoholPercentLimit; }
+
+        private int _dairyProductCountLimit = 2;
+        public int DairyProductCountLimit { set => _dairyProductCountLimit = value; get => _dairyProductCountLimit; }
+
 
         public Product GetProductbyPrice(double n, double m)
         {
@@ -43,42 +45,63 @@ namespace Polymorphism__casting__boxin_unboxing
         {
             if (product is Drink)
             {
-                Drink pr = product as Drink;
-                if (pr.AlcoholPercent <= _alcoholPercentLimit)
+                try
                 {
-                    Array.Resize(ref _products, _products.Length + 1);
-                    _products[_products.Length - 1] = product;
+                    Drink pr = product as Drink;
+
+                    if (pr.AlcoholPercent <= _alcoholPercentLimit)
+                    {
+                        Array.Resize(ref _products, _products.Length + 1);
+                        _products[_products.Length - 1] = product;
+
+                    }
+                    throw new OverAlchocolLimitException();
+
 
                 }
-                
+                catch
+                {
+                    Console.WriteLine("Mehsulun alchocol faizi limitden coxdur:");
+                }
+
+
             }
 
             if (product is Dairy)
             {
-
                 int count = 0;
-
 
                 foreach (var item in _products)
                 {
                     if (item is Dairy)
                     {
+                        Dairy sud = (Dairy)product;
                         count++;
+                    }
+                    try
+                    {
+                        if (count <= _dairyProductCountLimit)
+                        {
+                            Array.Resize(ref _products, _products.Length + 1);
+                            _products[_products.Length - 1] = product;
 
+                        }
+                        else
+                        {
+                            throw new OverDairyProductCountsLimit();
+                        }
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Mehsul say limitden coxdur.");
                     }
 
                 }
-                if (count <= _dairyProductCountLimit)
-                {
-                    Array.Resize(ref _products, _products.Length + 1);
-                    _products[_products.Length - 1] = product;
-                }
-                else
-                {
-                    throw new Exception("Over DairyProductCountLimit");
-                }
 
             }
+
+
+
 
         }
 
@@ -97,12 +120,6 @@ namespace Polymorphism__casting__boxin_unboxing
             throw new ProductNotFoundException();
           
         }
-
-
-       
-
-
-
 
 
         public Product GetProductBuNo(int no)
@@ -137,36 +154,41 @@ namespace Polymorphism__casting__boxin_unboxing
 
 
 
-        public Product GetDairyProducts()
+        public static Dairy[]  GetDairyProducts(Product[] products)
         {
-
-            foreach (var item in _products)
+            Dairy[] dairyProducts = new Dairy[0];
+            foreach (var item in products)
             {
-
+                
                 if (item is Dairy)
                 {
-                    return item;
+                    Dairy sud = (Dairy)item;
+                    Array.Resize(ref dairyProducts, dairyProducts.Length + 1);
+                    dairyProducts[dairyProducts.Length - 1] = sud;
+
                 }
             }
-            throw new ProductNotFoundException();
+            return dairyProducts;
         }
 
 
-        public Product GetDrinkProducts()
+        public static  Drink[] GetDrinkProducts(Product[] products)
         {
-            foreach (var item in _products)
+            Drink[] drinks = new Drink[0];
+            foreach (var item in products)
             {
                 if (item is Drink)
                 {
-                    return item;
+                    Drink dr = (Drink)item;
+                    Array.Resize(ref drinks, drinks.Length + 1);
+                    drinks[drinks.Length - 1] = dr;
                 }
             }
-            throw new ProductNotFoundException();
+            return drinks;
+           
         }
 
-
-
-
+        
     }
 }
 

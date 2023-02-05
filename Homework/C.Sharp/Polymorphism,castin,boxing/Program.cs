@@ -35,8 +35,11 @@ namespace Polymorphism__casting__boxin_unboxing
                         break;
 
                     case "2":
-                        var newAddedDairyProduct = CreateDairyProducts();
-                        market1.AddProduct(newAddedDairyProduct);
+                        
+                        
+                            var newAddedDairyProduct = CreateDairyProducts();
+                            market1.AddProduct(newAddedDairyProduct);
+                       
 
                         break;
 
@@ -68,15 +71,23 @@ namespace Polymorphism__casting__boxin_unboxing
                     case "5":
 
                         Console.WriteLine("Drink productlara bax");
-                        var  onlyDrinks = market1.GetDrinkProducts();
-                        onlyDrinks.ShowInfo();
+                        var  onlyDrinks = Storeclass.GetDrinkProducts(market1.Products);
+                        foreach(var item in onlyDrinks)
+                        {
+                            item.ShowInfo();
+
+                        }
                         break;
 
                     case "6":
 
                         Console.WriteLine("Dairy produktlara bax: ");
-                        var onlyDairy = market1.GetDairyProducts();
-                        onlyDairy.ShowInfo();
+                        var onlyDairy = Storeclass.GetDairyProducts(market1.Products);
+                        foreach (var item in onlyDairy)
+                        {
+                            item.ShowInfo();
+
+                        }
                         break;
 
                     case "7":
@@ -173,6 +184,7 @@ namespace Polymorphism__casting__boxin_unboxing
 
 
                 Console.WriteLine("Drink Qiymeti elave et: ");
+
 
                 double drinkPrice = Convert.ToDouble(Console.ReadLine());
 
